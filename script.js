@@ -1,19 +1,23 @@
-console.log(getComputerChoice());
+//playRound(getPlayerChoice, getComputerChoice);
 
 function getComputerChoice() {
   const randomNum = Math.floor(Math.random() * (4 - 1) + 1);
 
   return randomNum == 1
-    ? "Rock"
+    ? "rock"
     : randomNum == 2
-    ? "Paper"
+    ? "paper"
     : randomNum == 3
-    ? "Scissors"
+    ? "scissors"
     : NaN;
 }
 
-function getPlayerChoice() {}
+function getPlayerChoice() {
+  const choice = prompt("Choose 'Rock', 'Paper', or 'Scissors':").toLowerCase();
 
-function round() {}
+  return choice;
+}
+
+function playRound(playerChoice, computerChoice) {}
 
 function game() {}
