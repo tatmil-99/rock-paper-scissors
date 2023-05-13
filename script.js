@@ -1,10 +1,12 @@
-const playerChoice = getPlayerChoice(formatPlayerChoice, validatePlayerChoice);
-const computerChoice = getComputerChoice();
+// const playerChoice = getPlayerChoice(formatPlayerChoice, validatePlayerChoice);
+// const computerChoice = getComputerChoice();
 
-console.log(`Player's choice: ${playerChoice}`);
-console.log(`Computers's choice: ${computerChoice}`);
+// console.log(`Player's choice: ${playerChoice}`);
+// console.log(`Computers's choice: ${computerChoice}`);
 
-console.log(playRound(playerChoice, computerChoice));
+//const round = playRound(playerChoice, computerChoice);
+
+console.log(game(playRound, getPlayerChoice, getComputerChoice));
 
 // --- Function declarations & Helper functions ---
 
@@ -65,14 +67,52 @@ function playRound(playerChoice, computerChoice) {
   } else if (playerChoice == computerChoice) {
     return "Tie";
   } else if (playerChoice == "rock" && computerChoice != "paper") {
-    return "Player wins";
+    return "Player";
   } else if (playerChoice == "paper" && computerChoice != "scissors") {
-    return "Player wins";
+    return "Player";
   } else if (playerChoice == "scissors" && computerChoice != "rock") {
-    return "Player wins";
+    return "Player";
   } else {
-    return "Computer wins";
+    return "Computer";
   }
 }
 
-function game() {}
+// Function accepts 3 functions as args: one to play a round
+// of the game, and the other two as args to be passed into the
+// function that handles round logic. The function which gets
+// player choice also accepts args of its own, which are not listed
+// as parameters here. This function also adds scores and returns
+// the winner at the end.
+
+// !!! This function needs cleaned up, as do the others.
+// Passing helper functions as args into other functions is unmaintainable and
+// hard to follow !!!
+function game(round, getPlayerChoice, getComputerChoice) {
+  let playerScore = 0;
+  let computerScore = 0;
+
+  for (let i = 0; i < 5; i++) {
+    const playerChoice = getPlayerChoice(
+      formatPlayerChoice,
+      validatePlayerChoice
+    );
+    const computerChoice = getComputerChoice();
+
+    console.log(`Player's choice: ${playerChoice}`);
+    console.log(`Computers's choice: ${computerChoice}`);
+
+    const roundResult = round(playerChoice, computerChoice);
+
+    if (roundResult == "Cancelled") return "Game over";
+    if (roundResult == "Player") playerScore++;
+    if (roundResult == "Computer") computerScore++;
+
+    console.log(`Round ${i + 1}: ${roundResult} wins round`);
+  }
+
+  return playerScore > computerScore
+    ? `Player wins: ${playerScore} - ${computerScore}`
+    : playerScore < computerScore
+    ? `Computer wins: ${computerScore} - ${playerScore}`
+    : "Tie";
+}
