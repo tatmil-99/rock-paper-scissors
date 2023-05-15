@@ -1,11 +1,3 @@
-// const playerChoice = getPlayerChoice();
-// const computerChoice = getComputerChoice();
-
-// console.log(`Player's choice: ${playerChoice}`);
-// console.log(`Computers's choice: ${computerChoice}`);
-
-//const round = playRound(playerChoice, computerChoice);
-
 console.log(game(getComputerChoice, getPlayerChoice, playRound));
 
 // --- Function declarations & Helper functions ---
@@ -66,28 +58,29 @@ function playRound(playerChoice, computerChoice) {
   if (playerChoice == null) {
     return "Cancelled";
   } else if (playerChoice == computerChoice) {
-    return "Tie";
+    return "Tied";
   } else if (playerChoice == "rock" && computerChoice != "paper") {
-    return "Player";
+    return "Player wins";
   } else if (playerChoice == "paper" && computerChoice != "scissors") {
-    return "Player";
+    return "Player wins";
   } else if (playerChoice == "scissors" && computerChoice != "rock") {
-    return "Player";
+    return "Player wins";
   } else {
-    return "Computer";
+    return "Computer wins";
   }
 }
 
 // Function accepts 3 functions as args: one to play a round
 // of the game, and the other two as args to be passed into the
-// function that handles round logic. The function which gets
-// player choice also accepts args of its own, which are not listed
-// as parameters here. This function also adds scores and returns
-// the winner at the end.
-
-// !!! This function needs cleaned up, as do the others.
-// Passing helper functions as args into other functions is unmaintainable and
-// hard to follow !!!
+// function that handles round logic. This function also adds scores
+// and returns the winner at the end.
+// Additionally, I chose to use callbacks instead of using
+// helper functions due to the fact that these functions needed to
+// be ran inside game() and their values couldn't just be passed into game() due
+// to the use of loops and the fact that new return values were needed for
+// each iteration. I feel like it also adds to readability as far as understanding
+// what the code does. However, i'm not sure if it would be better practice to
+// just call the functions inside game()???
 function game(getComputerChoice, getPlayerChoice, playRound) {
   let playerScore = 0;
   let computerScore = 0;
@@ -99,17 +92,19 @@ function game(getComputerChoice, getPlayerChoice, playRound) {
     const roundResult = playRound(playerChoice, computerChoice);
 
     if (roundResult == "Cancelled") return "Game over";
-    if (roundResult == "Player") playerScore++;
-    if (roundResult == "Computer") computerScore++;
+    if (roundResult == "Player wins") playerScore++;
+    if (roundResult == "Computer wins") computerScore++;
 
+    console.log(`Round ${i + 1}:`);
     console.log(`Player's choice: ${playerChoice}`);
     console.log(`Computers's choice: ${computerChoice}`);
-    console.log(`Round ${i + 1}: ${roundResult} wins round`);
+    console.log(`${roundResult} round
+    `);
   }
 
   return playerScore > computerScore
-    ? `Player wins: ${playerScore} - ${computerScore}`
+    ? `!!! Player wins: ${playerScore} - ${computerScore} !!!`
     : playerScore < computerScore
-    ? `Computer wins: ${computerScore} - ${playerScore}`
-    : "Tie";
+    ? `!!! Computer wins: ${computerScore} - ${playerScore} !!!`
+    : "!!! Tied game !!!";
 }
