@@ -1,4 +1,4 @@
-// const playerChoice = getPlayerChoice(formatPlayerChoice, validatePlayerChoice);
+// const playerChoice = getPlayerChoice();
 // const computerChoice = getComputerChoice();
 
 // console.log(`Player's choice: ${playerChoice}`);
@@ -6,7 +6,7 @@
 
 //const round = playRound(playerChoice, computerChoice);
 
-console.log(game(playRound, getPlayerChoice, getComputerChoice));
+console.log(game(getComputerChoice, getPlayerChoice, playRound));
 
 // --- Function declarations & Helper functions ---
 
@@ -46,14 +46,15 @@ function validatePlayerChoice(choice) {
 // or the prompt is cancelled. The value is formatted and then
 // passed to validatePlayerChoice(). The formatted value is returned
 // once it passes validation.
-function getPlayerChoice(formatChoice, validateChoice) {
+function getPlayerChoice() {
   let formattedChoice;
 
   while (true) {
     const choice = prompt("Choose 'rock', 'paper', or 'scissors':");
-    formattedChoice = formatChoice(choice);
 
-    if (!validateChoice(formattedChoice)) continue;
+    formattedChoice = formatPlayerChoice(choice);
+
+    if (!validatePlayerChoice(formattedChoice)) continue;
 
     break;
   }
@@ -87,26 +88,22 @@ function playRound(playerChoice, computerChoice) {
 // !!! This function needs cleaned up, as do the others.
 // Passing helper functions as args into other functions is unmaintainable and
 // hard to follow !!!
-function game(round, getPlayerChoice, getComputerChoice) {
+function game(getComputerChoice, getPlayerChoice, playRound) {
   let playerScore = 0;
   let computerScore = 0;
 
   for (let i = 0; i < 5; i++) {
-    const playerChoice = getPlayerChoice(
-      formatPlayerChoice,
-      validatePlayerChoice
-    );
+    const playerChoice = getPlayerChoice();
     const computerChoice = getComputerChoice();
 
-    console.log(`Player's choice: ${playerChoice}`);
-    console.log(`Computers's choice: ${computerChoice}`);
-
-    const roundResult = round(playerChoice, computerChoice);
+    const roundResult = playRound(playerChoice, computerChoice);
 
     if (roundResult == "Cancelled") return "Game over";
     if (roundResult == "Player") playerScore++;
     if (roundResult == "Computer") computerScore++;
 
+    console.log(`Player's choice: ${playerChoice}`);
+    console.log(`Computers's choice: ${computerChoice}`);
     console.log(`Round ${i + 1}: ${roundResult} wins round`);
   }
 
