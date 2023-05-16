@@ -16,7 +16,7 @@ function getComputerChoice() {
 
 // Lowercasing strings returned from prompts makes validating
 // input easier. A ternary operator is used here because
-// .toLowerCase() cannot be performed on null if the user decides
+// toLowerCase cannot be performed on null if the user decides
 // to cancel the prompt in getPlayerChoice().
 function formatPlayerChoice(choice) {
   return typeof choice == "string" ? choice.toLowerCase() : null;
@@ -36,7 +36,7 @@ function validatePlayerChoice(choice) {
 
 // The function will prompt the user until a valid input is entered
 // or the prompt is cancelled. The value is formatted and then
-// passed to validatePlayerChoice(). The formatted value is returned
+// passed to validatePlayerChoice. The formatted value is returned
 // once it passes validation.
 function getPlayerChoice() {
   let formattedChoice;
@@ -70,17 +70,10 @@ function playRound(playerChoice, computerChoice) {
   }
 }
 
-// Function accepts 3 functions as args: one to play a round
-// of the game, and the other two as args to be passed into the
-// function that handles round logic. This function also adds scores
-// and returns the winner at the end.
-// Additionally, I chose to use callbacks instead of using
-// helper functions due to the fact that these functions needed to
-// be ran inside game() and their values couldn't just be passed into game() due
-// to the use of loops and the fact that new return values were needed for
-// each iteration. I feel like it also adds to readability as far as understanding
-// what the code does. However, i'm not sure if it would be better practice to
-// just call the functions inside game()???
+// Function calls 3 functions as helpers: getPlayerChoice, getComputerChoice, playRound.
+// These functions are used as defined in a loop which iterates 5 times (5 rounds).
+// This function also adds scores depending on round winner and returns the winner at the end
+// of the game.
 function playGame() {
   let playerScore = 0;
   let computerScore = 0;
