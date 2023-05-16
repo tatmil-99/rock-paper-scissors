@@ -1,4 +1,4 @@
-console.log(game(getComputerChoice, getPlayerChoice, playRound));
+console.log(playGame());
 
 // --- Function declarations & Helper functions ---
 
@@ -81,14 +81,13 @@ function playRound(playerChoice, computerChoice) {
 // each iteration. I feel like it also adds to readability as far as understanding
 // what the code does. However, i'm not sure if it would be better practice to
 // just call the functions inside game()???
-function game(getComputerChoice, getPlayerChoice, playRound) {
+function playGame() {
   let playerScore = 0;
   let computerScore = 0;
 
   for (let i = 0; i < 5; i++) {
     const playerChoice = getPlayerChoice();
     const computerChoice = getComputerChoice();
-
     const roundResult = playRound(playerChoice, computerChoice);
 
     if (roundResult == "Cancelled") return "Game over";
