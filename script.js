@@ -105,5 +105,5 @@ function playGame() {
     ? `!!! Player wins: ${playerScore} - ${computerScore} !!!`
     : playerScore < computerScore
     ? `!!! Computer wins: ${computerScore} - ${playerScore} !!!`
-    : "!!! Tied game !!!";
+    : `!!! Tied game: ${computerScore} - ${playerScore} !!!`;
 }
