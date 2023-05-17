@@ -34,10 +34,11 @@ function validatePlayerChoice(choice) {
   }
 }
 
-// The function will prompt the user until a valid input is entered
-// or the prompt is cancelled. The value is formatted and then
-// passed to validatePlayerChoice. The formatted value is returned
-// once it passes validation.
+/**
+ * This function prompts for user input with aid from formatPlayerChoice
+ * and validatePlayerChoice.
+ * @returns {(string|null)} Players choice or null if prompt is cancelled
+ */
 function getPlayerChoice() {
   let formattedChoice;
 
