@@ -57,11 +57,13 @@ function getPlayerChoice() {
 
   const btns = document.querySelectorAll("button");
   btns.forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      let target = e.target.className;
-      console.log(target);
-    });
+    btn.addEventListener("click", getChoice, { once: true });
   });
+
+  function getChoice() {
+    let target = this.className;
+    console.log(target);
+  }
 }
 
 function playRound(playerChoice, computerChoice) {
