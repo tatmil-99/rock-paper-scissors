@@ -1,4 +1,5 @@
-console.log(playGame());
+//console.log(playGame());
+playRound();
 
 // --- Function declarations & Helper functions ---
 
@@ -75,29 +76,29 @@ function playRound(playerChoice, computerChoice) {
 // These functions are used as defined in a loop which iterates 5 times (5 rounds).
 // This function also adds scores depending on round winner and returns the winner at the end
 // of the game.
-function playGame() {
-  let playerScore = 0;
-  let computerScore = 0;
+// function playGame() {
+//   let playerScore = 0;
+//   let computerScore = 0;
 
-  for (let i = 0; i < 5; i++) {
-    const playerChoice = getPlayerChoice();
-    const computerChoice = getComputerChoice();
-    const roundResult = playRound(playerChoice, computerChoice);
+//   for (let i = 0; i < 5; i++) {
+//     const playerChoice = getPlayerChoice();
+//     const computerChoice = getComputerChoice();
+//     const roundResult = playRound(playerChoice, computerChoice);
 
-    if (roundResult == "Cancelled") return "Game over";
-    if (roundResult == "Player wins") playerScore++;
-    if (roundResult == "Computer wins") computerScore++;
+//     if (roundResult == "Cancelled") return "Game over";
+//     if (roundResult == "Player wins") playerScore++;
+//     if (roundResult == "Computer wins") computerScore++;
 
-    console.log(`Round ${i + 1}:`);
-    console.log(`Player's choice: ${playerChoice}`);
-    console.log(`Computers's choice: ${computerChoice}`);
-    console.log(`${roundResult} round
-    `);
-  }
+//     console.log(`Round ${i + 1}:`);
+//     console.log(`Player's choice: ${playerChoice}`);
+//     console.log(`Computers's choice: ${computerChoice}`);
+//     console.log(`${roundResult} round
+//     `);
+//   }
 
-  return playerScore > computerScore
-    ? `!!! Player wins: ${playerScore} - ${computerScore} !!!`
-    : playerScore < computerScore
-    ? `!!! Computer wins: ${computerScore} - ${playerScore} !!!`
-    : `!!! Tied game: ${computerScore} - ${playerScore} !!!`;
-}
+//   return playerScore > computerScore
+//     ? `!!! Player wins: ${playerScore} - ${computerScore} !!!`
+//     : playerScore < computerScore
+//     ? `!!! Computer wins: ${computerScore} - ${playerScore} !!!`
+//     : `!!! Tied game: ${computerScore} - ${playerScore} !!!`;
+// }
