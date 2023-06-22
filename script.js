@@ -1,5 +1,5 @@
 //console.log(playGame());
-playRound();
+getPlayerChoice();
 
 // --- Function declarations & Helper functions ---
 
@@ -41,19 +41,27 @@ function validatePlayerChoice(choice) {
  * @returns {(string|null)} Players choice or null if prompt is cancelled
  */
 function getPlayerChoice() {
-  let formattedChoice;
+  // let formattedChoice;
 
-  while (true) {
-    const choice = prompt("Choose 'rock', 'paper', or 'scissors':");
+  // while (true) {
+  //   const choice = prompt("Choose 'rock', 'paper', or 'scissors':");
 
-    formattedChoice = formatPlayerChoice(choice);
+  //   formattedChoice = formatPlayerChoice(choice);
 
-    if (!validatePlayerChoice(formattedChoice)) continue;
+  //   if (!validatePlayerChoice(formattedChoice)) continue;
 
-    break;
-  }
+  //   break;
+  // }
 
-  return formattedChoice;
+  // return formattedChoice;
+
+  const btns = document.querySelectorAll("button");
+  btns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      let target = e.target.className;
+      console.log(target);
+    });
+  });
 }
 
 function playRound(playerChoice, computerChoice) {
