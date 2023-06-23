@@ -55,15 +55,19 @@ function getPlayerChoice() {
 
   // return formattedChoice;
 
-  const btns = document.querySelectorAll("button");
-  btns.forEach((btn) => {
-    btn.addEventListener("click", getChoice, { once: true });
-  });
+  let btnClass;
 
-  function getChoice() {
-    let target = this.className;
-    console.log(target);
-  }
+  const getBtnClass = (e) => {
+    btnClass = e.target.className;
+    console.log(btnClass);
+    e.target.disabled = true;
+    btns.forEach((btn) => btn.removeEventListener("click", getBtnClass));
+  };
+
+  const btns = document.querySelectorAll("button");
+  btns.forEach((btn) => btn.addEventListener("click", getBtnClass));
+
+  return btnClass;
 }
 
 function playRound(playerChoice, computerChoice) {
