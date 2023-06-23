@@ -1,5 +1,5 @@
 //console.log(playGame());
-getPlayerChoice();
+console.log(getPlayerChoice());
 
 // --- Function declarations & Helper functions ---
 
@@ -15,74 +15,36 @@ function getComputerChoice() {
     : NaN;
 }
 
-// Lowercasing strings returned from prompts makes validating
-// input easier. A ternary operator is used here because
-// toLowerCase cannot be performed on null if the user decides
-// to cancel the prompt in getPlayerChoice().
-function formatPlayerChoice(choice) {
-  return typeof choice == "string" ? choice.toLowerCase() : null;
-}
-
-function validatePlayerChoice(choice) {
-  switch (choice) {
-    case "rock":
-    case "paper":
-    case "scissors":
-    case null:
-      return true;
-    default:
-      return false;
-  }
-}
-
-/**
- * This function prompts for user input with aid from formatPlayerChoice
- * and validatePlayerChoice.
- * @returns {(string|null)} Players choice or null if prompt is cancelled
- */
 function getPlayerChoice() {
-  // let formattedChoice;
-
-  // while (true) {
-  //   const choice = prompt("Choose 'rock', 'paper', or 'scissors':");
-
-  //   formattedChoice = formatPlayerChoice(choice);
-
-  //   if (!validatePlayerChoice(formattedChoice)) continue;
-
-  //   break;
-  // }
-
-  // return formattedChoice;
-
-  let btnClass;
-
-  const getBtnClass = (e) => {
-    btnClass = e.target.className;
-    console.log(btnClass);
-    e.target.disabled = true;
-    btns.forEach((btn) => btn.removeEventListener("click", getBtnClass));
-  };
-
   const btns = document.querySelectorAll("button");
-  btns.forEach((btn) => btn.addEventListener("click", getBtnClass));
 
-  return btnClass;
+  btns.forEach((btn) =>
+    btn.addEventListener("click", (e) => {
+      const playerChoice = e.target.className;
+      const computerChoice = getComputerChoice();
+      playRound(playerChoice, computerChoice);
+    })
+  );
 }
 
 function playRound(playerChoice, computerChoice) {
   if (playerChoice == null) {
-    return "Cancelled";
+    // return "Cancelled";
   } else if (playerChoice == computerChoice) {
-    return "Tied";
+    // return "Tied";
+    console.log("tied");
   } else if (playerChoice == "rock" && computerChoice != "paper") {
-    return "Player wins";
+    // return "Player wins";
+    console.log("Player wins");
   } else if (playerChoice == "paper" && computerChoice != "scissors") {
-    return "Player wins";
+    // return "Player wins";
+    console.log("Player wins");
   } else if (playerChoice == "scissors" && computerChoice != "rock") {
-    return "Player wins";
+    // return "Player wins";
+    console.log("Player wins");
   } else {
-    return "Computer wins";
+    // return "Computer wins";
+    console.log("Computer wins");
   }
 }
 
@@ -90,29 +52,29 @@ function playRound(playerChoice, computerChoice) {
 // These functions are used as defined in a loop which iterates 5 times (5 rounds).
 // This function also adds scores depending on round winner and returns the winner at the end
 // of the game.
-// function playGame() {
-//   let playerScore = 0;
-//   let computerScore = 0;
+function playGame() {
+  let playerScore = 0;
+  let computerScore = 0;
 
-//   for (let i = 0; i < 5; i++) {
-//     const playerChoice = getPlayerChoice();
-//     const computerChoice = getComputerChoice();
-//     const roundResult = playRound(playerChoice, computerChoice);
+  for (let i = 0; i < 5; i++) {
+    const playerChoice = getPlayerChoice();
+    const computerChoice = getComputerChoice();
+    const roundResult = playRound(playerChoice, computerChoice);
 
-//     if (roundResult == "Cancelled") return "Game over";
-//     if (roundResult == "Player wins") playerScore++;
-//     if (roundResult == "Computer wins") computerScore++;
+    if (roundResult == "Cancelled") return "Game over";
+    if (roundResult == "Player wins") playerScore++;
+    if (roundResult == "Computer wins") computerScore++;
 
-//     console.log(`Round ${i + 1}:`);
-//     console.log(`Player's choice: ${playerChoice}`);
-//     console.log(`Computers's choice: ${computerChoice}`);
-//     console.log(`${roundResult} round
-//     `);
-//   }
+    console.log(`Round ${i + 1}:`);
+    console.log(`Player's choice: ${playerChoice}`);
+    console.log(`Computers's choice: ${computerChoice}`);
+    console.log(`${roundResult} round
+    `);
+  }
 
-//   return playerScore > computerScore
-//     ? `!!! Player wins: ${playerScore} - ${computerScore} !!!`
-//     : playerScore < computerScore
-//     ? `!!! Computer wins: ${computerScore} - ${playerScore} !!!`
-//     : `!!! Tied game: ${computerScore} - ${playerScore} !!!`;
-// }
+  return playerScore > computerScore
+    ? `!!! Player wins: ${playerScore} - ${computerScore} !!!`
+    : playerScore < computerScore
+    ? `!!! Computer wins: ${computerScore} - ${playerScore} !!!`
+    : `!!! Tied game: ${computerScore} - ${playerScore} !!!`;
+}
