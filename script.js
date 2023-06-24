@@ -15,36 +15,49 @@ function getComputerChoice() {
     : NaN;
 }
 
+/*
+Function gets player choice via event listener on buttons.
+Function is also playing a round and may also have to house
+game logic.
+**Function name is a little underwhelming**
+*/
 function getPlayerChoice() {
   const btns = document.querySelectorAll("button");
+  let playerScore = 0;
+  let computerScore = 0;
 
-  btns.forEach((btn) =>
+  btns.forEach((btn) => {
     btn.addEventListener("click", (e) => {
       const playerChoice = e.target.className;
       const computerChoice = getComputerChoice();
-      playRound(playerChoice, computerChoice);
-    })
-  );
+      const roundResult = playRound(playerChoice, computerChoice);
+      // Game logic will likely have to go in here due to score data not persisting with function call
+      console.log(roundResult);
+      if (roundResult == "Player wins") playerScore++;
+      if (roundResult == "Computer wins") computerScore++;
+      console.log(`player: ${playerScore}, computer: ${computerScore}`);
+    });
+  });
 }
 
 function playRound(playerChoice, computerChoice) {
   if (playerChoice == null) {
     // return "Cancelled";
   } else if (playerChoice == computerChoice) {
-    // return "Tied";
-    console.log("tied");
+    // console.log("tied");
+    return "Tied";
   } else if (playerChoice == "rock" && computerChoice != "paper") {
-    // return "Player wins";
-    console.log("Player wins");
+    // console.log("Player wins");
+    return "Player wins";
   } else if (playerChoice == "paper" && computerChoice != "scissors") {
-    // return "Player wins";
-    console.log("Player wins");
+    // console.log("Player wins");
+    return "Player wins";
   } else if (playerChoice == "scissors" && computerChoice != "rock") {
-    // return "Player wins";
-    console.log("Player wins");
+    // console.log("Player wins");
+    return "Player wins";
   } else {
-    // return "Computer wins";
-    console.log("Computer wins");
+    // console.log("Computer wins");
+    return "Computer wins";
   }
 }
 
@@ -52,7 +65,7 @@ function playRound(playerChoice, computerChoice) {
 // These functions are used as defined in a loop which iterates 5 times (5 rounds).
 // This function also adds scores depending on round winner and returns the winner at the end
 // of the game.
-function playGame() {
+function playGame(roundResult) {
   let playerScore = 0;
   let computerScore = 0;
 
@@ -68,8 +81,7 @@ function playGame() {
     console.log(`Round ${i + 1}:`);
     console.log(`Player's choice: ${playerChoice}`);
     console.log(`Computers's choice: ${computerChoice}`);
-    console.log(`${roundResult} round
-    `);
+    console.log(`${roundResult} round`);
   }
 
   return playerScore > computerScore
