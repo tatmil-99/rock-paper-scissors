@@ -1,5 +1,4 @@
-//console.log(playGame());
-console.log(getPlayerChoice());
+playGame();
 
 // --- Function declarations & Helper functions ---
 
@@ -15,78 +14,77 @@ function getComputerChoice() {
     : NaN;
 }
 
+function getRoundWinner(playerChoice, computerChoice) {
+  if (playerChoice == computerChoice) {
+    return "Tied";
+  } else if (playerChoice == "rock" && computerChoice != "paper") {
+    return "Player wins";
+  } else if (playerChoice == "paper" && computerChoice != "scissors") {
+    return "Player wins";
+  } else if (playerChoice == "scissors" && computerChoice != "rock") {
+    return "Player wins";
+  } else {
+    return "Computer wins";
+  }
+}
+
 /*
-Function gets player choice via event listener on buttons.
-Function is also playing a round and may also have to house
-game logic.
-**Function name is a little underwhelming**
+The Function listens for clicks on buttons and plays 1 round for each click 
+(5 rounds total) and tracks player scores, displaying round and game winner in UI. 
+Nested function created because logic relies on outer variables and must be
+named/referenced in order to remove the event listener after 5 rounds.
 */
-function getPlayerChoice() {
-  const btns = document.querySelectorAll("button");
+function playGame() {
+  const playRound = (e) => {
+    clickCount++;
+
+    if (clickCount >= 5) {
+      btns.forEach((btn) => btn.removeEventListener("click", playRound));
+    }
+
+    const playerChoice = e.target.className;
+    const computerChoice = getComputerChoice();
+    const roundResult = getRoundWinner(playerChoice, computerChoice);
+
+    if (roundResult == "Player wins") playerScore++;
+    if (roundResult == "Computer wins") computerScore++;
+    console.log(`${roundResult} round: ${playerScore} - ${computerScore}`); // Display in UI
+  };
+
+  let clickCount = 0;
   let playerScore = 0;
   let computerScore = 0;
 
-  btns.forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      const playerChoice = e.target.className;
-      const computerChoice = getComputerChoice();
-      const roundResult = playRound(playerChoice, computerChoice);
-      // Game logic will likely have to go in here due to score data not persisting with function call
-      console.log(roundResult);
-      if (roundResult == "Player wins") playerScore++;
-      if (roundResult == "Computer wins") computerScore++;
-      console.log(`player: ${playerScore}, computer: ${computerScore}`);
-    });
-  });
-}
-
-function playRound(playerChoice, computerChoice) {
-  if (playerChoice == null) {
-    // return "Cancelled";
-  } else if (playerChoice == computerChoice) {
-    // console.log("tied");
-    return "Tied";
-  } else if (playerChoice == "rock" && computerChoice != "paper") {
-    // console.log("Player wins");
-    return "Player wins";
-  } else if (playerChoice == "paper" && computerChoice != "scissors") {
-    // console.log("Player wins");
-    return "Player wins";
-  } else if (playerChoice == "scissors" && computerChoice != "rock") {
-    // console.log("Player wins");
-    return "Player wins";
-  } else {
-    // console.log("Computer wins");
-    return "Computer wins";
-  }
+  const btns = document.querySelectorAll("button");
+  btns.forEach((btn) => btn.addEventListener("click", playRound));
 }
 
 // Function calls 3 functions as helpers: getPlayerChoice, getComputerChoice, playRound.
 // These functions are used as defined in a loop which iterates 5 times (5 rounds).
 // This function also adds scores depending on round winner and returns the winner at the end
 // of the game.
-function playGame(roundResult) {
-  let playerScore = 0;
-  let computerScore = 0;
+// function playGame(roundResult) {
+//   let playerScore = 0;
+//   let computerScore = 0;
 
-  for (let i = 0; i < 5; i++) {
-    const playerChoice = getPlayerChoice();
-    const computerChoice = getComputerChoice();
-    const roundResult = playRound(playerChoice, computerChoice);
+//   for (let i = 0; i < 5; i++) {
+//     const playerChoice = playGame();
+//     const computerChoice = getComputerChoice();
+//     const roundResult = getRoundWinner(playerChoice, computerChoice);
 
-    if (roundResult == "Cancelled") return "Game over";
-    if (roundResult == "Player wins") playerScore++;
-    if (roundResult == "Computer wins") computerScore++;
+//     if (roundResult == "Cancelled") return "Game over";
+//     if (roundResult == "Player wins") playerScore++;
+//     if (roundResult == "Computer wins") computerScore++;
 
-    console.log(`Round ${i + 1}:`);
-    console.log(`Player's choice: ${playerChoice}`);
-    console.log(`Computers's choice: ${computerChoice}`);
-    console.log(`${roundResult} round`);
-  }
+//     console.log(`Round ${i + 1}:`);
+//     console.log(`Player's choice: ${playerChoice}`);
+//     console.log(`Computers's choice: ${computerChoice}`);
+//     console.log(`${roundResult} round`);
+//   }
 
-  return playerScore > computerScore
-    ? `!!! Player wins: ${playerScore} - ${computerScore} !!!`
-    : playerScore < computerScore
-    ? `!!! Computer wins: ${computerScore} - ${playerScore} !!!`
-    : `!!! Tied game: ${computerScore} - ${playerScore} !!!`;
-}
+//   return playerScore > computerScore
+//     ? `!!! Player wins: ${playerScore} - ${computerScore} !!!`
+//     : playerScore < computerScore
+//     ? `!!! Computer wins: ${computerScore} - ${playerScore} !!!`
+//     : `!!! Tied game: ${computerScore} - ${playerScore} !!!`;
+// }
