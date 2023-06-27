@@ -31,6 +31,16 @@ function removeEvent(btns, playRound) {
   });
 }
 
+function updatePlayerScore(roundResult, playerScore) {
+  if (roundResult == "Player wins") playerScore++;
+  return playerScore;
+}
+
+function updateComputerScore(roundResult, computerScore) {
+  if (roundResult == "Computer wins") computerScore++;
+  return computerScore;
+}
+
 function displayScore(playerScore, computerScore) {
   const playerPara = document.querySelector(".player-score");
   playerPara.textContent = playerScore;
@@ -40,9 +50,10 @@ function displayScore(playerScore, computerScore) {
 
 /*
 The Function listens for clicks on buttons and plays 1 round for each click 
-(5 rounds total) and tracks player scores, displaying round and game winner in UI. 
-Nested function created because logic relies on outer variables and must be
-named/referenced in order to remove the event listener after 5 rounds.
+(5 rounds total) and tracks player scores, displaying round, scores, and game winner in UI. 
+Inner function created because logic relies on outer function variables. An external listener
+can't be used in this case because values can't be returned from a listener, so the inner 
+function needs access to the outer functions scope to manipulate data. 
 */
 function playGame() {
   let clickCount = 0;
@@ -57,12 +68,10 @@ function playGame() {
     const playerChoice = e.target.classList[0];
     const computerChoice = getComputerChoice();
     const roundResult = getRoundWinner(playerChoice, computerChoice);
-
-    if (roundResult == "Player wins") playerScore++;
-    else if (roundResult == "Computer wins") computerScore++;
+    playerScore = updatePlayerScore(roundResult, playerScore);
+    computerScore = updateComputerScore(roundResult, computerScore);
 
     displayScore(playerScore, computerScore);
-
     console.log(`${roundResult} round: ${playerScore} - ${computerScore}`); // Display in UI
   };
 
