@@ -46,14 +46,9 @@ named/referenced in order to remove the event listener after 5 rounds.
 */
 function playGame() {
   let clickCount = 0;
-
   let playerScore = 0;
-  const playerPara = document.querySelector(".player-score");
-  playerPara.textContent = playerScore; // Display initial score
-
   let computerScore = 0;
-  const computerPara = document.querySelector(".computer-score");
-  computerPara.textContent = computerScore; // Display initial score
+  const btns = document.querySelectorAll("button");
 
   const playRound = (e) => {
     clickCount++;
@@ -63,17 +58,14 @@ function playGame() {
     const computerChoice = getComputerChoice();
     const roundResult = getRoundWinner(playerChoice, computerChoice);
 
-    if (roundResult == "Player wins") {
-      playerScore++;
-      playerPara.textContent = playerScore;
-    } else if (roundResult == "Computer wins") {
-      computerScore++;
-      computerPara.textContent = computerScore;
-    }
+    if (roundResult == "Player wins") playerScore++;
+    else if (roundResult == "Computer wins") computerScore++;
+
+    displayScore(playerScore, computerScore);
 
     console.log(`${roundResult} round: ${playerScore} - ${computerScore}`); // Display in UI
   };
 
-  const btns = document.querySelectorAll("button");
+  displayScore(playerScore, computerScore); // Show initial scores
   btns.forEach((btn) => btn.addEventListener("click", playRound));
 }
