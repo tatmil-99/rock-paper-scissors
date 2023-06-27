@@ -24,6 +24,13 @@ function getRoundWinner(playerChoice, computerChoice) {
   }
 }
 
+function displayScore(playerScore, computerScore) {
+  const playerPara = document.querySelector(".player-score");
+  playerPara.textContent = playerScore;
+  const computerPara = document.querySelector(".computer-score");
+  computerPara.textContent = computerScore;
+}
+
 /*
 The Function listens for clicks on buttons and plays 1 round for each click 
 (5 rounds total) and tracks player scores, displaying round and game winner in UI. 
@@ -35,21 +42,33 @@ function playGame() {
     clickCount++;
 
     if (clickCount >= 5) {
-      btns.forEach((btn) => btn.removeEventListener("click", playRound));
+      btns.forEach((btn) => {
+        btn.removeEventListener("click", playRound);
+        btn.disabled = true;
+      });
     }
 
-    const playerChoice = e.target.className;
+    const playerChoice = e.target.classList[0];
     const computerChoice = getComputerChoice();
     const roundResult = getRoundWinner(playerChoice, computerChoice);
 
     if (roundResult == "Player wins") playerScore++;
-    if (roundResult == "Computer wins") computerScore++;
+    else if (roundResult == "Computer wins") computerScore++;
+
+    playerPara.textContent = playerScore;
+    computerPara.textContent = computerScore;
     console.log(`${roundResult} round: ${playerScore} - ${computerScore}`); // Display in UI
   };
 
   let clickCount = 0;
+
   let playerScore = 0;
+  const playerPara = document.querySelector(".player-score");
+  playerPara.textContent = playerScore; // Display initial score
+
   let computerScore = 0;
+  const computerPara = document.querySelector(".computer-score");
+  computerPara.textContent = computerScore; // Display initial score
 
   const btns = document.querySelectorAll("button");
   btns.forEach((btn) => btn.addEventListener("click", playRound));
