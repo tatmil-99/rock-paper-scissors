@@ -26,3 +26,12 @@ body {
 .btns {
   margin-top: 20px;
 }
+
+.message-container {
+  padding: 10px;
+  margin: 10px;
+}
+
+.message {
+  text-align: center;
+}

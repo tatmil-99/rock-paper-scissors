@@ -4,10 +4,7 @@ playGame();
 
 function getComputerChoice() {
   const randomNum = Math.floor(Math.random() * (4 - 1) + 1);
-
-  if (randomNum == 1) return "rock";
-  else if (randomNum == 2) return "paper";
-  else return "scissors";
+  return randomNum == 1 ? "rock" : randomNum == 2 ? "paper" : "scissors";
 }
 
 function getRoundWinner(playerChoice, computerChoice) {
@@ -24,7 +21,9 @@ function getRoundWinner(playerChoice, computerChoice) {
   }
 }
 
-function removeEvent(btns, playRound) {
+function removeEvent(playRound) {
+  const btns = document.querySelectorAll("button");
+
   btns.forEach((btn) => {
     btn.removeEventListener("click", playRound);
     btn.disabled = true;
@@ -48,12 +47,25 @@ function displayScore(playerScore, computerScore) {
   computerPara.textContent = computerScore;
 }
 
+function displayWinner(roundResult, clicks, playerScore, computerScore) {
+  const message = document.querySelector(".message");
+  if (clicks < 5) {
+    message.textContent = `${roundResult} round.`;
+  } else if (playerScore > computerScore) {
+    message.textContent = "GAME OVER: Player wins!";
+  } else if (playerScore < computerScore) {
+    message.textContent = "GAME OVER: Computer wins!";
+  } else {
+    message.textContent = "GAME OVER: Tied!";
+  }
+}
+
 /*
 The Function listens for clicks on buttons and plays 1 round for each click 
 (5 rounds total) and tracks player scores, displaying round, scores, and game winner in UI. 
 Inner function created because logic relies on outer function variables. An external listener
 can't be used in this case because values can't be returned from a listener, so the inner 
-function needs access to the outer functions scope to manipulate data. 
+function needs access to the outer functions scope. 
 */
 function playGame() {
   let clickCount = 0;
@@ -63,7 +75,7 @@ function playGame() {
 
   const playRound = (e) => {
     clickCount++;
-    if (clickCount >= 5) removeEvent(btns, playRound);
+    if (clickCount > 4) removeEvent(playRound);
 
     const playerChoice = e.target.classList[0];
     const computerChoice = getComputerChoice();
@@ -72,7 +84,7 @@ function playGame() {
     computerScore = updateComputerScore(roundResult, computerScore);
 
     displayScore(playerScore, computerScore);
-    console.log(`${roundResult} round: ${playerScore} - ${computerScore}`); // Display in UI
+    displayWinner(roundResult, clickCount, playerScore, computerScore);
   };
 
   displayScore(playerScore, computerScore); // Show initial scores
