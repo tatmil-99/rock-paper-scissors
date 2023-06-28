@@ -50,7 +50,7 @@ function displayScore(playerScore, computerScore) {
 function displayWinner(roundResult, clicks, playerScore, computerScore) {
   const message = document.querySelector(".message");
   if (clicks < 5) {
-    message.textContent = `${roundResult} round.`;
+    message.textContent = `R${clicks}: ${roundResult}.`;
   } else if (playerScore > computerScore) {
     message.textContent = "GAME OVER: Player wins!";
   } else if (playerScore < computerScore) {
