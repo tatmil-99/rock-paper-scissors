@@ -10,7 +10,7 @@ This project was built with the intention of practicing DOM manipulation and eve
 
 - Dynamic web page updates
 - Ability to toggle buttons to play game
-- Dynamic state updates
+- Manipulation and storage of program data
 - Event handlers
 - DOM manipulation
 - Responsiveness with Flexbox
